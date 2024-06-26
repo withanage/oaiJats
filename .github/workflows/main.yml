@@ -1,0 +1,43 @@
+on: [push]
+name: oaiJats
+jobs:
+  oaiJats:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - application: ojs
+            php-version: 7.3
+            database: mysql
+          - application: ojs
+            php-version: 7.4
+            database: mysql
+          - application: ojs
+            php-version: 8.0
+            database: ojs
+          - application: ojs
+            php-version: 7.3
+            database: pgsql
+          - application: ojs
+            php-version: 7.4
+            database: pgsql
+          - application: ojs
+            php-version: 8.0
+            database: pgsql
+
+    name: oaiJats
+    steps:
+      - uses: pkp/pkp-github-actions@v1
+        with:
+         node_version: 20
+
+      - name: Checkout Plugin
+        uses: actions/checkout@v2
+
+      - name: Link Plugin Folder
+        run: |
+          cd ~/${{ matrix.application }}
+          ln -s ${{ github.workspace }} ~/${{ matrix.application }}/plugins/oaiMetadataFormats/oaiJats
+        shell: bash
+
