@@ -31,6 +31,8 @@ jobs:
       - uses: pkp/pkp-github-actions@v1
         with:
          node_version: 20
+         branch: main
+         repository: pkp
 
       - name: Checkout Plugin
         uses: actions/checkout@v2
