@@ -8,22 +8,16 @@ jobs:
       matrix:
         include:
           - application: ojs
-            php-version: 7.3
+            php-version: 8.1
             database: mysql
           - application: ojs
-            php-version: 7.4
+            php-version: 8.2
             database: mysql
           - application: ojs
-            php-version: 8.0
-            database: mysql
-          - application: ojs
-            php-version: 7.3
+            php-version: 8.1
             database: pgsql
           - application: ojs
-            php-version: 7.4
-            database: pgsql
-          - application: ojs
-            php-version: 8.0
+            php-version: 8.2
             database: pgsql
 
     name: oaiJats
