@@ -53,6 +53,7 @@ jobs:
           git clone  https://github.com/pkp/datasets  datasets --depth 1
           cp -rf datasets/${APPLICATION}/${BRANCH}/${TEST}/public/* public/
           cp -rf datasets/${APPLICATION}/${BRANCH}/${TEST}/files/* files/
+          cp  ~/datasets/${APPLICATION}/${DATASET_BRANCH}/${TEST}/config.inc.php .
           cat datasets/${APPLICATION}/${BRANCH}/${TEST}/database.sql | ./datasets/tools/dbclient.sh
 
         shell: bash
