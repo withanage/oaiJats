@@ -124,12 +124,7 @@ jobs:
           path: ~/${{ matrix.application}}/access.log
           overwrite: false
 
-      - name: Setup tmate session by failure
-        if: ${{ failure()}}
-        uses: mxschmitt/action-tmate@v3
 
-
-      
 
 
      
