@@ -55,20 +55,23 @@ jobs:
           cp -rf datasets/${APPLICATION}/${BRANCH}/${TEST}/public/* public/
           cp -rf datasets/${APPLICATION}/${BRANCH}/${TEST}/files/* files/
           cat datasets/${APPLICATION}/${BRANCH}/${TEST}/database.sql | ./datasets/tools/dbclient.sh
-          php lib/pkp/tools/installPluginVersion.php plugins/generic/jatsTemplate/version.xml
-          php lib/pkp/tools/installPluginVersion.php plugins/oaiMetadataFormats/oaiJats/version.xml
+
         shell: bash
         env:
           APPLICATION: ${{matrix.application}}
           BRANCH: main
           TEST: ${{matrix.database}}
           DBTYPE: ${{matrix.database == 'pgsql' && 'PostgreSQL' || 'MySQLi'}}
-          DBHOST: localhost # Database hostname
-          DBNAME: ${APPLICATION}-ci # Database name
-          DBUSERNAME: ${APPLICATION}-ci # Database username
+          DBHOST: localhost
+          DBNAME: ${APPLICATION}-ci
+          DBUSERNAME: ${APPLICATION}-ci
           DBPASSWORD: ${APPLICATION}-ci
 
-
+      - name: Run Plugin installation
+        run: |
+          php lib/pkp/tools/installPluginVersion.php plugins/generic/jatsTemplate/version.xml
+          php lib/pkp/tools/installPluginVersion.php plugins/oaiMetadataFormats/oaiJats/version.xml
+        shell: bash
       - name : Run Cypress tests
         run: |
           $(npm bin)/cypress run --config '{"specPattern":["plugins/oaiMetadataFormats/oaiJats/cypress/tests/functional/*.cy.js"]}'
