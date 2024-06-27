@@ -62,7 +62,7 @@ jobs:
           DATASET_BRANCH: main
           TEST: ${{matrix.database}}
           DBTYPE: ${{matrix.database == 'pgsql' && 'PostgreSQL' || 'MySQLi'}}
-          DBHOST: localhost
+          DBHOST: "http://localhost"
           DBNAME: ${{matrix.application}}-ci
           DBUSERNAME: ${{matrix.application}}-ci
           DBPASSWORD: ${{matrix.application}}-ci
