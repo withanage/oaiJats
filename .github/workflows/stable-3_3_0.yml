@@ -36,6 +36,10 @@ jobs:
         with:
            python-version: '3.9'
 
+      - name: Install python libraries
+        run: sudo apt-get install python3-lxml xmlstarlet
+        shell: bash
+
       - name: Install plugin for push
         if: ${{  github.event_name  == 'push'}}
         run: |
