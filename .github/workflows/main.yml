@@ -113,14 +113,14 @@ jobs:
         if: failure()
         with:
           name: cypress-${{matrix.database }}-${{ matrix.php-version }}
-          path: ~/${{ matrix.application ||  inputs.application || github.event.repository.name }}/cypress/screenshots
+          path: ~/${{ matrix.application }}/cypress/screenshots
           if-no-files-found: ignore
           overwrite: false
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: ${{matrix.database }}-${{ matrix.php-version }}-http-access.log
-          path: ~/${{ matrix.application ||  inputs.application || github.event.repository.name }}/access.log
+          path: ~/${{ matrix.application}}/access.log
           overwrite: false
       - name: Setup tmate session by failure
         if: ${{ failure()}}
