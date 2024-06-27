@@ -102,7 +102,7 @@ jobs:
       - name : Run Cypress tests
         run: |
           cd ~/${{matrix.application}}
-          npx cypress run --config '{"specPattern":["plugins/oaiMetadataFormats/oaiJats/cypress/tests/functional/*.cy.js"]}'
+          npx cypress run  --config integrationFolder=plugins/oaiMetadataFormats/oaiJats/cypress/tests
         shell: bash
 
 
