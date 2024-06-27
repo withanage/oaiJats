@@ -37,7 +37,7 @@ jobs:
       - name: Install plugin for push
         if: ${{  github.event_name  == 'push'}}
         run: |
-          cd ~/${{matrix.application}/plugins/oaiMetadataFormats
+          cd ~/${{matrix.application}}/plugins/oaiMetadataFormats
           git clone -b ${{ github.head_ref || github.ref_name }} https://github.com/${{ github.repository}} ${{ github.event.repository.name }}  --depth 1
         shell: bash
 
