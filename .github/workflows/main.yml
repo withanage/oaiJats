@@ -62,7 +62,7 @@ jobs:
           DATASET_BRANCH: main
           TEST: ${{matrix.database}}
           DBTYPE: ${{matrix.database == 'pgsql' && 'PostgreSQL' || 'MySQLi'}}
-          DBHOST: "http://localhost"
+          DBHOST: localhost
           DBNAME: ${{matrix.application}}-ci
           DBUSERNAME: ${{matrix.application}}-ci
           DBPASSWORD: ${{matrix.application}}-ci
@@ -94,6 +94,7 @@ jobs:
           CYPRESS_DBNAME: ${{matrix.application}}-ci
           CYPRESS_DBUSERNAME: ${{matrix.application}}-ci
           CYPRESS_DBPASSWORD: ${{matrix.application}}-ci
+          CYPRESS_BASE_URL: "http://localhost"
 
       - name : Run Cypress tests
         run: |
