@@ -66,6 +66,13 @@ jobs:
           DBUSERNAME: ${{matrix.application}}-ci
           DBPASSWORD: ${{matrix.application}}-ci
 
+      - name: get jatsTemplate plugin
+        run: |
+          cd ~/${{matrix.application}}/
+          git clone -b ${BRANCH} https://github.com/pkp/jatsTemplate plugins/generic/jatsTemplate
+        shell: bash
+        env:
+          BRANCH: main
       - name: Run Plugin installation
         run: |
           cd ~/${{matrix.application}}/
