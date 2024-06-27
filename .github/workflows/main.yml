@@ -74,6 +74,7 @@ jobs:
 
       - name: Run Plugin installation
         run: |
+          cd ~/${{matrix.application}}/
           php lib/pkp/tools/installPluginVersion.php plugins/generic/jatsTemplate/version.xml
           php lib/pkp/tools/installPluginVersion.php plugins/oaiMetadataFormats/oaiJats/version.xml
         shell: bash
