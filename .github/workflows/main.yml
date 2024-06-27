@@ -51,15 +51,15 @@ jobs:
         run: |
           cd ~/${{matrix.application}}
           git clone  https://github.com/pkp/datasets  datasets --depth 1
-          cp -rf datasets/${APPLICATION}/${BRANCH}/${TEST}/public/* public/
-          cp -rf datasets/${APPLICATION}/${BRANCH}/${TEST}/files/* files/
+          cp -rf datasets/${APPLICATION}/${DATASET_BRANCH}/${TEST}/public/* public/
+          cp -rf datasets/${APPLICATION}/${DATASET_BRANCH}/${TEST}/files/* files/
           cp  datasets/${APPLICATION}/${DATASET_BRANCH}/${TEST}/config.inc.php .
-          cat datasets/${APPLICATION}/${BRANCH}/${TEST}/database.sql | ./datasets/tools/dbclient.sh
+          cat datasets/${APPLICATION}/${DATASET_BRANCH}/${TEST}/database.sql | ./datasets/tools/dbclient.sh
 
         shell: bash
         env:
           APPLICATION: ${{matrix.application}}
-          BRANCH: main
+          DATASET_BRANCH: main
           TEST: ${{matrix.database}}
           DBTYPE: ${{matrix.database == 'pgsql' && 'PostgreSQL' || 'MySQLi'}}
           DBHOST: localhost
@@ -70,10 +70,10 @@ jobs:
       - name: get jatsTemplate plugin
         run: |
           cd ~/${{matrix.application}}
-          git clone -b ${BRANCH} https://github.com/pkp/jatsTemplate plugins/generic/jatsTemplate
+          git clone -b ${DATASET_BRANCH} https://github.com/pkp/jatsTemplate plugins/generic/jatsTemplate
         shell: bash
         env:
-          BRANCH: main
+          DATASET_BRANCH: main
       - name: Run Plugin installation
         run: |
           cd ~/${{matrix.application}}
