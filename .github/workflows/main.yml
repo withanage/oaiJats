@@ -15,7 +15,7 @@ jobs:
             database: mysql
           - application: ojs
             php-version: 8.0
-            database: ojs
+            database: mysql
           - application: ojs
             php-version: 7.3
             database: pgsql
@@ -63,6 +63,11 @@ jobs:
           BRANCH: main
           TEST: ${{matrix.database}}
           DBTYPE: ${{matrix.database == 'pgsql' && 'PostgreSQL' || 'MySQLi'}}
+          DBHOST: localhost # Database hostname
+          DBNAME: ${APPLICATION}-ci # Database name
+          DBUSERNAME: ${APPLICATION}-ci # Database username
+          DBPASSWORD: ${APPLICATION}-ci
+
 
       - name : Run Cypress tests
         run: |
