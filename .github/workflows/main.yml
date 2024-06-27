@@ -51,7 +51,7 @@ jobs:
       - name: Install from datasets
         run: |
           cd ~/${{matrix.application}}/
-          git clone --bare https://github.com/pkp/datasets  datasets
+          git clone  https://github.com/pkp/datasets  datasets --depth 1
           cp -rf datasets/${APPLICATION}/${BRANCH}/${TEST}/public/* public/
           cp -rf datasets/${APPLICATION}/${BRANCH}/${TEST}/files/* files/
           cat datasets/${APPLICATION}/${BRANCH}/${TEST}/database.sql | ./datasets/tools/dbclient.sh
