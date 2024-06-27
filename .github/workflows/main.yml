@@ -34,12 +34,48 @@ jobs:
          branch: main
          repository: pkp
 
-      - name: Checkout Plugin
-        uses: actions/checkout@v2
-
-      - name: Link Plugin Folder
+      - name: Install plugin
+        if: ${{  github.event_name  == 'push'}}
         run: |
-          cd ~/${{ matrix.application }}
-          ln -s ${{ github.workspace }} ~/${{ matrix.application }}/plugins/oaiMetadataFormats/oaiJats
+          cd ~/${{matrix.application}}/plugins/oaiJatsType/
+          git clone -b ${{ github.head_ref || github.ref_name }} https://github.com/${{ github.repository}} ~/${{ github.event.repository.name }}  --bare
         shell: bash
 
+      - name: Install plugin for pull_request
+        if: ${{github.event_name  == 'pull_request'}}
+        run: |
+          cd ~/${{matrix.application}}/plugins/oaiJatsType/
+          git clone -b ${{ github.event.pull_request.head.ref}} ${{ github.event.pull_request.head.repo.html_url}} ~/${{ github.event.pull_request.head.repo.name }} --bare
+        shell: bash
+
+      - name: Install from datasets
+        run: |
+          cd ~/${{matrix.application}}/
+          git clone --bare https://github.com/pkp/datasets  datasets
+          cp -rf datasets/${APPLICATION}/${BRANCH}/${TEST}/public/* public/
+          cp -rf datasets/${APPLICATION}/${BRANCH}/${TEST}/files/* files/
+          cat datasets/${APPLICATION}/${BRANCH}/${TEST}/database.sql | ./datasets/tools/dbclient.sh
+          php lib/pkp/tools/installPluginVersion.php plugins/generic/jatsTemplate/version.xml
+          php lib/pkp/tools/installPluginVersion.php plugins/oaiMetadataFormats/oaiJats/version.xml
+        shell: bash
+        env:
+          APPLICATION: ${{matrix.application}}
+          BRANCH: ${{inputs.branch}}
+          TEST: ${{matrix.database}}
+
+      - name : Run Cypress tests
+        run: |
+          $(npm bin)/cypress run --config '{"specPattern":["plugins/oaiMetadataFormats/oaiJats/cypress/tests/functional/*.cy.js"]}'
+        shell: bash
+
+      - name: Fetch a JATS document through oaiJats, removing the OAI-PMH wrapper using xmlstarlet
+        run: |
+          get -q -O - "http://localhost/index.php/publicknowledge/oai?verb=ListRecords&metadataPrefix=jats" | xmlstarlet sel -N x="https://jats.nlm.nih.gov/publishing/1.1/" -t -c "(//x:article)[1]" > jats.xml
+          python3 plugins/oaiMetadataFormats/oaiJats/validate.py jats.xml erudit-style-0.3.sch
+        shell: bash
+
+
+      
+
+
+     
