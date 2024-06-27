@@ -82,7 +82,7 @@ jobs:
         shell: bash
       - name : Run Cypress tests
         run: |
-          $(npm bin)/cypress run --config '{"specPattern":["plugins/oaiMetadataFormats/oaiJats/cypress/tests/functional/*.cy.js"]}'
+          npx cypress run --config '{"specPattern":["plugins/oaiMetadataFormats/oaiJats/cypress/tests/functional/*.cy.js"]}'
         shell: bash
 
       - name: Fetch a JATS document through oaiJats, removing the OAI-PMH wrapper using xmlstarlet
