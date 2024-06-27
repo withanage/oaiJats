@@ -62,6 +62,7 @@ jobs:
           APPLICATION: ${{matrix.application}}
           BRANCH: main
           TEST: ${{matrix.database}}
+          DBTYPE: ${{matrix.database == 'pgsql' && 'PostgreSQL' || 'MySQLi'}}
 
       - name : Run Cypress tests
         run: |
