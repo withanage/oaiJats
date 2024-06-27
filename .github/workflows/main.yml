@@ -60,7 +60,7 @@ jobs:
         shell: bash
         env:
           APPLICATION: ${{matrix.application}}
-          BRANCH: main
+          BRANCH: ${{inputs.branch}}
           TEST: ${{matrix.database}}
 
       - name : Run Cypress tests
@@ -73,6 +73,9 @@ jobs:
           get -q -O - "http://localhost/index.php/publicknowledge/oai?verb=ListRecords&metadataPrefix=jats" | xmlstarlet sel -N x="https://jats.nlm.nih.gov/publishing/1.1/" -t -c "(//x:article)[1]" > jats.xml
           python3 plugins/oaiMetadataFormats/oaiJats/validate.py jats.xml erudit-style-0.3.sch
         shell: bash
+      - name: Setup tmate session by failure
+        if: ${{ failure()}}
+        uses: mxschmitt/action-tmate@v3
 
 
       
