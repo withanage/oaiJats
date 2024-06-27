@@ -37,14 +37,14 @@ jobs:
       - name: Install plugin
         if: ${{  github.event_name  == 'push'}}
         run: |
-          cd ~/${{matrix.application}}/plugins/oaiJatsType/
+          cd ~/${{matrix.application}}
           git clone -b ${{ github.head_ref || github.ref_name }} https://github.com/${{ github.repository}} ~/${{ github.event.repository.name }}  --bare
         shell: bash
 
       - name: Install plugin for pull_request
         if: ${{github.event_name  == 'pull_request'}}
         run: |
-          cd ~/${{matrix.application}}/plugins/oaiJatsType/
+          cd ~/${{matrix.application}}
           git clone -b ${{ github.event.pull_request.head.ref}} ${{ github.event.pull_request.head.repo.html_url}} ~/${{ github.event.pull_request.head.repo.name }} --bare
         shell: bash
 
