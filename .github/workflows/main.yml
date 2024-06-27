@@ -63,9 +63,9 @@ jobs:
           TEST: ${{matrix.database}}
           DBTYPE: ${{matrix.database == 'pgsql' && 'PostgreSQL' || 'MySQLi'}}
           DBHOST: localhost
-          DBNAME: ${APPLICATION}-ci
-          DBUSERNAME: ${APPLICATION}-ci
-          DBPASSWORD: ${APPLICATION}-ci
+          DBNAME: ${{matrix.application}}-ci
+          DBUSERNAME: ${{matrix.application}}-ci
+          DBPASSWORD: ${{matrix.application}}-ci
 
       - name: Run Plugin installation
         run: |
