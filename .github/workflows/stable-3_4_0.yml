@@ -28,10 +28,10 @@ jobs:
          branch: stable-3_4_0
          repository: pkp
 
-      - name: Set up Python 3.9
+      - name: Set up Python 3.7
         uses: actions/setup-python@v4
         with:
-           python-version: '3.9'
+           python-version: '3.7'
 
       - name: Install python libraries
         run: | 
