@@ -39,7 +39,7 @@ jobs:
       - name: Install python libraries
         run: | 
           sudo apt-get install python3-lxml xmlstarlet
-          sudo apt-get install lxml
+          sudo apt-get install python3-lxml
         shell: bash
 
       - name: Install plugin for push
