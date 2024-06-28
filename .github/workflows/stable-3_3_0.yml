@@ -37,7 +37,9 @@ jobs:
            python-version: '3.9'
 
       - name: Install python libraries
-        run: sudo apt-get install python3-lxml xmlstarlet
+        run: | 
+          sudo apt-get install python3-lxml xmlstarlet
+          sudo pip install lxml
         shell: bash
 
       - name: Install plugin for push
@@ -113,7 +115,7 @@ jobs:
       - name: Fetch a JATS document through oaiJats, removing the OAI-PMH wrapper using xmlstarlet
         run: |
           cd ~/${{matrix.application}}
-          get -q -O - "http://localhost/index.php/publicknowledge/oai?verb=ListRecords&metadataPrefix=jats" | xmlstarlet sel -N x="https://jats.nlm.nih.gov/publishing/1.1/" -t -c "(//x:article)[1]" > jats.xml
+          wget -q -O - "http://localhost/index.php/publicknowledge/oai?verb=ListRecords&metadataPrefix=jats" | xmlstarlet sel -N x="https://jats.nlm.nih.gov/publishing/1.1/" -t -c "(//x:article)[1]" > jats.xml
           wget -q "https://eruditps.docs.erudit.org/_downloads/f0f9fb861e01a47df2ce48f588524d29/erudit-style-0.3.sch"
           python3 plugins/oaiMetadataFormats/oaiJats/validate.py jats.xml erudit-style-0.3.sch
         shell: bash
