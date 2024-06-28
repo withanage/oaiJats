@@ -128,9 +128,6 @@ jobs:
           if-no-files-found: ignore
           overwrite: false
 
-      - name: Setup tmate session by failure
-        if: failure()
-        uses: mxschmitt/action-tmate@v3
 
 
 
