@@ -22,7 +22,7 @@ jobs:
 
     name: oaiJats
     steps:
-      - uses: xmlFlow/pkp-github-actions@v1
+      - uses: pkp/pkp-github-actions@v1
         with:
          node_version: 16
          branch: stable-3_4_0
@@ -80,6 +80,7 @@ jobs:
         shell: bash
         env:
           DATASET_BRANCH: stable-3_4_0
+
       - name: Run Plugin installation
         run: |
           cd ~/${{matrix.application}}
@@ -127,7 +128,7 @@ jobs:
 
 
       - uses: actions/upload-artifact@v4
-        if: ${{always()  &&  matrix.database}}
+        if: always()
         with:
          name: ${{matrix.database }}-${{ matrix.php-version }}-http-access.log
          path: ~/${{ matrix.application}}/access.log
